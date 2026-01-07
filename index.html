@@ -1,1 +1,251 @@
 <!DOCTYPE </html>
+**PERFETTO! Ora BLOCCO 2 - Aggiungi sotto questo:**
+
+```javascript
+const qs = [
+{id:1,c:'Trasparenza',q:'Utenti informati su uso AI?',w:10},
+{id:2,c:'Trasparenza',q:'Documentazione pubblica?',w:8},
+{id:3,c:'Trasparenza',q:'Ultimo aggiornamento?',w:6,t:'s',o:['Mai','>1 anno','6-12 mesi','1-6 mesi','Recente']},
+{id:4,c:'Privacy',q:'Privacy Policy GDPR?',w:10},
+{id:5,c:'Privacy',q:'Cancellazione dati utenti?',w:9},
+{id:6,c:'Privacy',q:'Tempo conservazione?',w:7,t:'s',o:['Non sappiamo','Indefinito','>5 anni','1-5 anni','<1 anno','Minimo']},
+{id:7,c:'Bias',q:'Testato per bias?',w:10},
+{id:8,c:'Bias',q:'Metriche bias?',w:9,t:'s',o:['Nessuna','Disparate Impact','Equal Opportunity','Equalized Odds','Demographic Parity','Multiple']},
+{id:9,c:'Bias',q:'Frequenza test?',w:7,t:'s',o:['Mai','Al lancio','Annuale','Trimestrale','Mensile','Continuo']},
+{id:10,c:'Responsabilità',q:'Responsabile AI?',w:10},
+{id:11,c:'Responsabilità',q:'Chi è?',w:8,t:'s',o:['Nessuno','Team tecnico','Manager','CTO/CEO','Comitato']},
+{id:12,c:'Responsabilità',q:'Processo reclami?',w:8},
+{id:13,c:'Dignità',q:'Rispetta autonomia?',w:10},
+{id:14,c:'Dignità',q:'Evita vulnerabilità?',w:10},
+{id:15,c:'Dignità',q:'Usa manipolazione?',w:8,inv:true}
+];
+const issues = () => {
+const i = [];
+if(ans[2]==='si'&&ans[3]==='Mai') i.push('Doc mai aggiornata');
+if(ans[4]==='si'&&ans[5]==='no') i.push('GDPR ma no cancellazione');
+if(ans[7]==='si'&&ans[8]==='Nessuna') i.push('Test bias senza metriche');
+if(ans[7]==='si'&&ans[9]==='Mai') i.push('Test bias ma Mai');
+if(ans[10]==='si'&&ans[11]==='Nessuno') i.push('Responsabile ma Nessuno');
+if(ans[13]==='si'&&ans[15]==='si') i.push('Autonomia ma manipolazione');
+const y = Object.values(ans).filter(a=>a==='si').length;
+if(y>=10) i.push('⚠️ Punteggio alto - verifica Premium');
+return i;
+};
+const score = () => {
+let t=0,m=0;
+qs.forEach(q=>{
+m+=q.w;
+const a=ans[q.id];
+if(q.t==='s'){
+const idx=q.o.indexOf(a);
+if(idx>=0) t+=(idx/(q.o.length-1))*q.w;
+}else{
+if(q.inv){
+if(a==='no')t+=q.w;
+else if(a==='parzialmente')t+=q.w*0.5;
+}else{
+if(a==='si')t+=q.w;
+else if(a==='parzialmente')t+=q.w*0.5;
+}}
+});
+return Math.round((t/m)*100);
+};
+const level = (s) => {
+if(s>=80)return{t:'Eccellente',c:'green'};
+if(s>=60)return{t:'Buono',c:'blue'};
+if(s>=40)return{t:'Sufficiente',c:'yellow'};
+return{t:'Critico',c:'red'};
+};
+```**PERFETTO! Ora BLOCCO 3 - Home page, aggiungi sotto:**
+
+```javascript
+if(page==='home') return (
+<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-8">
+<div className="max-w-6xl mx-auto">
+<div className="text-center mb-12">
+<h1 className="text-5xl font-bold mb-4">AI Ethics Check</h1>
+<p className="text-xl text-gray-600 mb-4">Valutazione Etica AI</p>
+<div className="bg-white p-4 rounded-lg inline-block shadow">
+<p className="font-bold">Dott.ssa Angele Rachel Bilegue</p>
+<p className="text-sm">Psicologa • Filosofa • Teologa</p>
+<p className="text-xs text-indigo-600">Esperta Etica AI</p>
+</div>
+</div>
+<div className="bg-indigo-50 border-2 border-indigo-200 rounded-lg p-6 mb-8">
+<h3 className="font-bold text-indigo-900 mb-2">✓ Sistema Verifica Avanzato</h3>
+<p className="text-sm text-indigo-800">15 domande • Controlli incrociati • Rilevamento incoerenze</p>
+</div>
+<div className="grid md:grid-cols-2 gap-8 mb-8">
+<div className="bg-white p-8 rounded-lg shadow-lg">
+<h3 className="text-2xl font-bold mb-2">Base</h3>
+<div className="text-4xl font-bold text-indigo-600 mb-4">Gratuita</div>
+<ul className="space-y-2 mb-6 text-sm">
+<li>✓ 15 domande verificate</li>
+<li>✓ Rilevamento incoerenze</li>
+<li>✓ Punteggio 0-100</li>
+<li>✓ Report email</li>
+</ul>
+<button onClick={()=>setPage('form')} className="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700">Inizia Gratis</button>
+</div>
+<div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-8 rounded-lg shadow-xl text-white relative">
+<div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold">PREMIUM</div>
+<h3 className="text-2xl font-bold mb-2">Certificazione</h3>
+<div className="text-4xl font-bold mb-4">€299</div>
+<ul className="space-y-2 mb-6 text-sm">
+<li>✓ Tutto della Base</li>
+<li>✓ Revisione manuale</li>
+<li>✓ Report 20+ pagine</li>
+<li>✓ Badge certificato</li>
+<li>✓ 1h consulenza video</li>
+</ul>
+<button onClick={()=>window.location.href='mailto:sorellapsicologa@gmail.com?subject=Premium'} className="w-full bg-white text-indigo-600 py-3 rounded-lg font-bold hover:bg-gray-100">Richiedi Premium</button>
+</div>
+</div>
+<div className="bg-gray-50 p-6 rounded-lg text-xs text-gray-600">
+<p><strong>Disclaimer:</strong> Analisi etica indipendente. Non sostituisce consulenza legale.</p>
+<p>Contatto: <a href="mailto:sorellapsicologa@gmail.com" className="text-indigo-600">sorellapsicologa@gmail.com</a></p>
+</div>
+</div>
+</div>
+);
+```
+**PERFETTO! Ora BLOCCO 4 - Form, aggiungi sotto:**
+
+```javascript
+if(page==='form') return (
+<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-8">
+<div className="max-w-2xl mx-auto">
+<div className="bg-white rounded-lg shadow-xl p-8">
+<h2 className="text-3xl font-bold mb-6">Informazioni</h2>
+<div className="space-y-4 mb-6">
+<div>
+<label className="block font-bold mb-2">Azienda *</label>
+<input type="text" value={form.company} onChange={e=>setForm({...form,company:e.target.value})} className="w-full px-4 py-3 border-2 rounded-lg" placeholder="Nome azienda"/>
+</div>
+<div>
+<label className="block font-bold mb-2">Settore *</label>
+<select value={form.sector} onChange={e=>setForm({...form,sector:e.target.value})} className="w-full px-4 py-3 border-2 rounded-lg">
+<option value="">Seleziona</option>
+<option value="healthcare">Healthcare</option>
+<option value="finance">Finance</option>
+<option value="hr">HR</option>
+<option value="tech">Tech</option>
+<option value="other">Altro</option>
+</select>
+</div>
+<div>
+<label className="block font-bold mb-2">Email *</label>
+<input type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full px-4 py-3 border-2 rounded-lg" placeholder="email@azienda.com"/>
+</div>
+</div>
+<div className="flex gap-4">
+<button onClick={()=>setPage('home')} className="px-6 py-3 border-2 rounded-lg font-bold">Indietro</button>
+<button onClick={()=>{if(form.company&&form.email&&form.sector)setPage('questions');else alert('Compila tutti i campi');}} className="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-bold">Inizia</button>
+</div>
+</div>
+</div>
+</div>
+);
+```
+**PERFETTO! Ora BLOCCO 5 - Questionario, aggiungi sotto:**
+
+```javascript
+if(page==='questions') {
+const p=(Object.keys(ans).length/qs.length)*100;
+return (
+<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-8">
+<div className="max-w-3xl mx-auto">
+<div className="bg-white rounded-lg shadow-xl p-6 md:p-8">
+<div className="mb-6">
+<div className="flex justify-between mb-2">
+<h2 className="text-2xl font-bold">Questionario</h2>
+<span className="text-sm font-bold text-indigo-600">{Object.keys(ans).length}/{qs.length}</span>
+</div>
+<div className="w-full bg-gray-200 rounded-full h-2">
+<div className="bg-indigo-600 h-2 rounded-full transition-all" style={{width:`${p}%`}}/>
+</div>
+</div>
+<div className="space-y-6 mb-6">
+{qs.map(q=>(
+<div key={q.id} className="border-2 rounded-lg p-6">
+<div className="mb-4">
+<div className="text-xs font-bold text-indigo-600 mb-1">{q.c}</div>
+<div className="font-bold">{q.q}</div>
+</div>
+{q.t==='s'?(
+<select value={ans[q.id]||''} onChange={e=>setAns({...ans,[q.id]:e.target.value})} className="w-full px-4 py-3 border-2 rounded-lg">
+<option value="">Seleziona</option>
+{q.o.map(o=><option key={o} value={o}>{o}</option>)}
+</select>
+):(
+<div className="flex gap-3">
+{['si','parzialmente','no'].map(v=>(
+<button key={v} onClick={()=>setAns({...ans,[q.id]:v})} className={`flex-1 py-2 px-4 rounded-lg border-2 font-bold ${ans[q.id]===v?(v==='si'?'bg-green-500 text-white':v==='parzialmente'?'bg-yellow-500 text-white':'bg-red-500 text-white'):'border-gray-300'}`}>
+{v==='si'?'Sì':v==='parzialmente'?'Parziale':'No'}
+</button>
+))}
+</div>
+)}
+</div>
+))}
+</div>
+<div className="flex gap-4">
+<button onClick={()=>setPage('form')} className="px-6 py-3 border-2 rounded-lg font-bold">Indietro</button>
+<button onClick={()=>{if(Object.keys(ans).length===qs.length)setPage('results');else alert('Rispondi a tutte');}} className="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-bold">Risultati</button>
+</div>
+</div>
+</div>
+</div>
+);
+}
+```
+**PERFETTO! ULTIMO BLOCCO 6 - Risultati e chiusura, aggiungi sotto:**
+
+```javascript
+if(page==='results') {
+const s=score();
+const l=level(s);
+const i=issues();
+return (
+<div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-8">
+<div className="max-w-4xl mx-auto">
+<div className="bg-white rounded-lg shadow-xl p-8">
+<div className="text-center mb-8">
+<h2 className="text-3xl font-bold mb-2">Risultati</h2>
+<p className="text-gray-600">{form.company}</p>
+</div>
+<div className={`bg-${l.c}-50 rounded-lg p-8 mb-8 text-center`}>
+<div className={`text-6xl font-bold text-${l.c}-600 mb-2`}>{s}/100</div>
+<div className={`text-2xl font-bold text-${l.c}-600`}>{l.t}</div>
+</div>
+{i.length>0&&(
+<div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 mb-8">
+<h3 className="font-bold mb-2">⚠️ Incoerenze</h3>
+<ul className="space-y-1 text-sm">{i.map((x,idx)=><li key={idx}>• {x}</li>)}</ul>
+</div>
+)}
+<div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-8 text-center text-white mb-6">
+<h3 className="text-2xl font-bold mb-3">Vuoi Approfondire?</h3>
+<p className="mb-6">Certificazione Premium con analisi dettagliata</p>
+<div className="flex gap-4 justify-center flex-wrap">
+<button onClick={()=>window.location.href=`mailto:sorellapsicologa@gmail.com?subject=Report ${form.company}&body=Punteggio: ${s}/100`} className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-bold">📧 Report Email</button>
+<button onClick={()=>window.location.href=`mailto:sorellapsicologa@gmail.com?subject=Premium ${form.company}&body=Punteggio: ${s}/100`} className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-bold">🏆 Premium €299</button>
+</div>
+</div>
+<div className="text-center">
+<button onClick={()=>{setPage('home');setAns({});setForm({company:'',email:'',sector:''});}} className="text-indigo-600 font-bold">← Nuova Valutazione</button>
+</div>
+</div>
+</div>
+</div>
+);
+}
+}
+ReactDOM.render(<App/>, document.getElementById('root'));
+</script>
+</body>
+</html>
+```
+
+
+
